@@ -4,6 +4,22 @@ A small Streamlit app that loads GPS records for one vehicle driving around Sevi
 
 The data is synthetic. The trajectory analysis is done with [MovingPandas](https://github.com/movingpandas/movingpandas); this project does not reimplement its algorithms.
 
+## Screenshots
+
+Taken from the running app with the sample dataset and default settings.
+
+Route from Santa Justa through Nervión, the city centre, Triana and Los Remedios, with the three detected stops:
+
+![Map with route and stops](screenshots/map.png)
+
+Journey summary:
+
+![Journey statistics](screenshots/dashboard.png)
+
+Stops table, records removed during cleaning, and speed over time:
+
+![Stops, removed records and speed chart](screenshots/analysis.png)
+
 ## Background
 
 My interest in geographic data analysis started during my Computer Engineering studies at the University of Seville. This is an independent personal project that I wrote recently, not university coursework.
