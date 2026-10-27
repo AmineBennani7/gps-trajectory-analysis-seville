@@ -20,9 +20,7 @@ Stops table, records removed during cleaning, and speed over time:
 
 ![Stops, removed records and speed chart](screenshots/analysis.png)
 
-## Background
 
-My interest in geographic data analysis started during my Computer Engineering studies at the University of Seville. This is an independent personal project that I wrote recently, not university coursework.
 
 ## What it does
 
