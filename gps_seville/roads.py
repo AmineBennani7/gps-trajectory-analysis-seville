@@ -37,15 +37,24 @@ def osmnx_available() -> bool:
 
 
 def download_roads(
-    area: BaseGeometry, network_type: str = "drive", cache_folder: str = "cache/osmnx"
+    area: BaseGeometry,
+    network_type: str = "drive",
+    cache_folder: str = "cache/osmnx",
+    timeout_s: int = 60,
 ) -> gpd.GeoDataFrame:
-    """Download the road network inside `area` (WGS84 polygon) and return its edges."""
+    """Download the road network inside `area` (WGS84 polygon) and return its edges.
+
+    `timeout_s` limits each request to the Overpass API so the app does not hang
+    when the server is slow or unreachable.
+    """
     try:
         import osmnx as ox
     except ImportError as exc:
         raise GpsAnalysisError("Road analysis needs OSMnx: pip install osmnx") from exc
     ox.settings.use_cache = True
     ox.settings.cache_folder = cache_folder
+    ox.settings.requests_timeout = timeout_s
+    ox.settings.overpass_rate_limit = False  # do not wait on the server's slot status
     try:
         graph = ox.graph_from_polygon(area, network_type=network_type, retain_all=False)
     except Exception as exc:  # network errors, empty responses
