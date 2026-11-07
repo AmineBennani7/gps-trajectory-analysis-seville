@@ -22,7 +22,7 @@ def test_single_vehicle_matches_original_analysis(single_result):
 
 def test_raw_cleaned_and_processed_are_separate(fleet_result):
     r = fleet_result
-    assert len(r.raw) == r.quality.total_records == 2054
+    assert len(r.raw) == r.quality.total_records == 2046
     assert len(r.cleaned) + len(r.rejected) == len(r.raw)
     assert "speed" not in r.cleaned.columns  # cleaned data has no derived values
     assert {"speed", "acceleration"} <= set(r.points.columns)

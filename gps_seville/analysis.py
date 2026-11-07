@@ -206,6 +206,8 @@ def collection_stops(tc: mpd.TrajectoryCollection, cfg: StopConfig) -> gpd.GeoDa
         )
     vehicles = {t.id: vehicle_of(t) for t in tc}
     stops = stops.reset_index()
+    if stops.crs is None:  # MovingPandas leaves it unset for collections built from a list
+        stops = stops.set_crs("EPSG:4326")
     stops["vehicle_id"] = stops["traj_id"].map(vehicles)
     return stops
 

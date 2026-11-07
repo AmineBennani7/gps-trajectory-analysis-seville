@@ -141,7 +141,7 @@ def insert_invalid_records(df):
 ROUTE_VAN = [
     ("Basílica de la Macarena", 37.4010, -5.9893, 0, None),
     ("Calle Torneo (north)", 37.3990, -5.9985, 0, 35),
-    ("Plaza de Armas", 37.3925, -6.0010, 0, 35),
+    ("Plaza de Armas", 37.3925, -6.0010, 0, 70),  # speeding, for anomaly tests
     ("Puente de Triana", 37.3857, -6.0012, 0, 30),
     ("Triana (Plaza del Altozano)", 37.3851, -6.0034, 10 * 60, 20),
     ("Calle Pureza", 37.3825, -6.0010, 0, 25),
