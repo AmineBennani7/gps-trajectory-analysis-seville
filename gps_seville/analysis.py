@@ -227,16 +227,19 @@ def segment_journeys(
 
 
 def segment_table(segments: mpd.TrajectoryCollection) -> pd.DataFrame:
+    """One row per journey segment. The splitters overwrite the trajectory_id column
+    with the segment id, so the parent id (vehicle and day) is rebuilt here."""
     rows = []
     for seg in segments:
         start, end = seg.get_start_location(), seg.get_end_location()
         hours = seg.get_duration().total_seconds() / 3600
         km = seg.get_length(units=KM)
+        vehicle = vehicle_of(seg)
         rows.append(
             {
                 "segment_id": seg.id,
-                "vehicle_id": seg.df["vehicle_id"].iloc[0],
-                TRAJ_ID: seg.df[TRAJ_ID].iloc[0],
+                "vehicle_id": vehicle,
+                TRAJ_ID: f"{vehicle}_{pd.Timestamp(seg.get_start_time()):%Y-%m-%d}",
                 "start": seg.get_start_time(),
                 "end": seg.get_end_time(),
                 "duration_min": round(hours * 60, 1),
@@ -299,3 +302,17 @@ def lines_gdf(tc: mpd.TrajectoryCollection) -> gpd.GeoDataFrame:
     vehicles = {t.id: vehicle_of(t) for t in tc}
     lines["vehicle_id"] = lines[TRAJ_ID].map(vehicles)
     return lines
+
+
+def position_at(traj: mpd.Trajectory, t: pd.Timestamp) -> tuple[float, float, bool]:
+    """(lat, lon, observed) at time t.
+
+    If t is the time of a GPS fix, that fix is returned with observed=True.
+    Otherwise MovingPandas interpolates linearly between the fixes before and
+    after t (observed=False): an estimate, not a measurement.
+    """
+    if not traj.get_start_time() <= t <= traj.get_end_time():
+        raise InsufficientDataError(f"{t} is outside trajectory {traj.id}")
+    observed = t in traj.df.index
+    point = traj.get_position_at(t, method="nearest" if observed else "interpolated")
+    return point.y, point.x, observed

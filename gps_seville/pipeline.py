@@ -100,6 +100,9 @@ def run_pipeline(raw: pd.DataFrame, config: AppConfig | None = None) -> Pipeline
         )
     rejected = pd.concat([stage1, jumps], ignore_index=True)
     rejected = rejected.reindex(columns=REJECTED_COLUMNS)
+    # Rejected values are kept as written in the input, so they are text.
+    for col in ("timestamp", "latitude", "longitude", "accuracy_m"):
+        rejected[col] = rejected[col].map(lambda v: "" if pd.isna(v) else str(v))
 
     cleaned = an.points_gdf(tc)
     keep = [

@@ -54,6 +54,8 @@ def test_signal_gap_is_reported_and_splits_journey(fleet_result):
     seg = fleet_result.segment_table
     # van: 2 stops and 1 gap -> 4 journeys
     assert (seg["vehicle_id"] == "SEV-VAN-02").sum() == 4
+    # every segment points back to its trajectory (vehicle and day)
+    assert set(seg["trajectory_id"]) == set(fleet_result.trajectory_table["trajectory_id"])
 
 
 def test_distance_stages(fleet_result):
