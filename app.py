@@ -39,15 +39,23 @@ def run(file_bytes_or_path, max_speed, stop_diameter, stop_minutes):
 
 st.set_page_config(page_title="GPS Trajectory Analysis - Seville", layout="wide")
 st.title("GPS Trajectory Analysis - Seville")
-st.caption("Synthetic vehicle GPS data. Cleaning with pandas, trajectory analysis with "
-           "MovingPandas, map with Folium.")
+st.caption(
+    "Synthetic vehicle GPS data. Cleaning with pandas, trajectory analysis with "
+    "MovingPandas, map with Folium."
+)
 
 with st.sidebar:
     st.header("Data")
     upload = st.file_uploader("CSV with timestamp, latitude, longitude", type="csv")
     st.header("Parameters")
-    max_speed = st.slider("Max plausible speed (km/h)", 80, 400, 200, 10,
-                          help="Points that need a higher speed to reach are treated as GPS jumps.")
+    max_speed = st.slider(
+        "Max plausible speed (km/h)",
+        80,
+        400,
+        200,
+        10,
+        help="Points that need a higher speed to reach are treated as GPS jumps.",
+    )
     stop_diameter = st.slider("Stop: max diameter (m)", 10, 300, 60, 10)
     stop_minutes = st.slider("Stop: min duration (min)", 1, 30, 5)
 
@@ -73,20 +81,26 @@ c[2].metric("Records in file", len(raw))
 c[3].metric("Records used", s["points"])
 
 st.subheader("Map")
-st_folium(build_map(result, pd.concat([removed, result.outliers])),
-          height=550, use_container_width=True, returned_objects=[])
+st_folium(
+    build_map(result, pd.concat([removed, result.outliers])),
+    height=550,
+    use_container_width=True,
+    returned_objects=[],
+)
 
 left, right = st.columns(2)
 with left:
     st.subheader("Stops")
     if len(result.stops):
-        stops = pd.DataFrame({
-            "start": result.stops["start_time"].dt.strftime("%H:%M:%S"),
-            "end": result.stops["end_time"].dt.strftime("%H:%M:%S"),
-            "minutes": (result.stops["duration_s"] / 60).round(1),
-            "latitude": result.stops.geometry.y.round(5),
-            "longitude": result.stops.geometry.x.round(5),
-        }).reset_index(drop=True)
+        stops = pd.DataFrame(
+            {
+                "start": result.stops["start_time"].dt.strftime("%H:%M:%S"),
+                "end": result.stops["end_time"].dt.strftime("%H:%M:%S"),
+                "minutes": (result.stops["duration_s"] / 60).round(1),
+                "latitude": result.stops.geometry.y.round(5),
+                "longitude": result.stops.geometry.x.round(5),
+            }
+        ).reset_index(drop=True)
         st.dataframe(stops, hide_index=True)
     else:
         st.write("No stops found with the current parameters.")
@@ -103,5 +117,9 @@ st.subheader("Speed over time (km/h)")
 st.line_chart(result.trajectory.df["speed"])
 
 cleaned = result.trajectory.df[["vehicle_id", "latitude", "longitude", "speed"]].reset_index()
-st.download_button("Download cleaned trajectory (CSV)", cleaned.to_csv(index=False),
-                   file_name="cleaned_trajectory.csv", mime="text/csv")
+st.download_button(
+    "Download cleaned trajectory (CSV)",
+    cleaned.to_csv(index=False),
+    file_name="cleaned_trajectory.csv",
+    mime="text/csv",
+)

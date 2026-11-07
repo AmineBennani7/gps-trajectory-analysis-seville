@@ -9,15 +9,15 @@ class GpsAnalysisError(Exception):
     """Base class for errors the user can act on (bad input, bad settings)."""
 
 
-class InputFormatError(GpsAnalysisError):
+class InputFormatError(GpsAnalysisError, ValueError):
     """An uploaded file cannot be read or is missing required fields."""
 
 
-class InsufficientDataError(GpsAnalysisError):
+class InsufficientDataError(GpsAnalysisError, ValueError):
     """Not enough valid records to build a trajectory or run an analysis."""
 
 
-class ConfigError(GpsAnalysisError):
+class ConfigError(GpsAnalysisError, ValueError):
     """A configuration value is missing or invalid."""
 
 

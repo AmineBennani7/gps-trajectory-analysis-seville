@@ -7,7 +7,7 @@ reject_zero_coordinates = true
 drop_duplicate_timestamps = true
 max_speed_kmh = 200.0          # points needing a higher speed to reach are GPS jumps
 min_points_per_trajectory = 2
-# max_accuracy_m = 25.0        # only used if the input has an accuracy_m column
+max_accuracy_m = 30.0          # only used if the input has an accuracy_m column
 
 [cleaning.bbox]                # set to the study area; records outside are rejected
 lat_min = 37.30

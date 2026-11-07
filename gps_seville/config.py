@@ -34,7 +34,7 @@ class CleaningConfig:
     reject_zero_coordinates: bool = True
     drop_duplicate_timestamps: bool = True
     max_speed_kmh: float = 200.0  # GPS jumps, removed with MovingPandas OutlierCleaner
-    max_accuracy_m: float | None = None  # used only if the input has an accuracy_m column
+    max_accuracy_m: float | None = 30.0  # used only if the input has an accuracy_m column
     min_points_per_trajectory: int = 2
 
 
