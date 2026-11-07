@@ -1,0 +1,31 @@
+# Default analysis settings. Copy this file, change values and pass it with
+#   streamlit run app.py -- --config my_settings.toml
+# Only the keys you include are overridden.
+
+[cleaning]
+reject_zero_coordinates = true
+drop_duplicate_timestamps = true
+max_speed_kmh = 200.0          # points needing a higher speed to reach are GPS jumps
+min_points_per_trajectory = 2
+max_accuracy_m = 30.0          # only used if the input has an accuracy_m column
+
+[cleaning.bbox]                # set to the study area; records outside are rejected
+lat_min = 37.30
+lat_max = 37.45
+lon_min = -6.08
+lon_max = -5.88
+
+[stops]
+max_diameter_m = 60.0
+min_duration_min = 5.0
+
+[analysis]
+max_gap_s = 180.0              # gaps longer than this split a journey
+anomaly_z = 3.5                # robust z-score threshold
+cluster_eps_m = 150.0          # DBSCAN radius for frequent locations
+cluster_min_visits = 2
+similarity_buffer_m = 50.0
+
+[spatial]
+projected_crs = "EPSG:25830"   # ETRS89 / UTM 30N; "auto" picks a UTM zone from the data
+route_buffer_m = 100.0

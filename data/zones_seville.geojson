@@ -1,0 +1,245 @@
+{
+ "type": "FeatureCollection",
+ "name": "zones_seville",
+ "description": "Approximate, hand-drawn outlines for the demo. Not official boundaries.",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "zone_id": 1,
+    "name": "Casco Antiguo",
+    "zone_type": "district"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.0005,
+       37.3965
+      ],
+      [
+       -5.989,
+       37.4025
+      ],
+      [
+       -5.984,
+       37.396
+      ],
+      [
+       -5.9845,
+       37.388
+      ],
+      [
+       -5.987,
+       37.3815
+      ],
+      [
+       -5.993,
+       37.381
+      ],
+      [
+       -5.9985,
+       37.385
+      ],
+      [
+       -6.0005,
+       37.3965
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "zone_id": 2,
+    "name": "Triana",
+    "zone_type": "district"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -6.001,
+       37.39
+      ],
+      [
+       -6.0002,
+       37.386
+      ],
+      [
+       -6.0,
+       37.383
+      ],
+      [
+       -6.004,
+       37.38
+      ],
+      [
+       -6.012,
+       37.381
+      ],
+      [
+       -6.013,
+       37.39
+      ],
+      [
+       -6.001,
+       37.39
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "zone_id": 3,
+    "name": "Los Remedios",
+    "zone_type": "district"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -5.9975,
+       37.379
+      ],
+      [
+       -5.996,
+       37.374
+      ],
+      [
+       -6.0,
+       37.368
+      ],
+      [
+       -6.01,
+       37.37
+      ],
+      [
+       -6.01,
+       37.379
+      ],
+      [
+       -6.004,
+       37.38
+      ],
+      [
+       -5.9975,
+       37.379
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "zone_id": 4,
+    "name": "Nervión",
+    "zone_type": "district"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -5.98,
+       37.388
+      ],
+      [
+       -5.964,
+       37.389
+      ],
+      [
+       -5.962,
+       37.379
+      ],
+      [
+       -5.98,
+       37.379
+      ],
+      [
+       -5.98,
+       37.388
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "zone_id": 5,
+    "name": "Santa Justa station",
+    "zone_type": "facility"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -5.979,
+       37.394
+      ],
+      [
+       -5.972,
+       37.394
+      ],
+      [
+       -5.972,
+       37.3895
+      ],
+      [
+       -5.979,
+       37.3895
+      ],
+      [
+       -5.979,
+       37.394
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "zone_id": 6,
+    "name": "Parque de María Luisa",
+    "zone_type": "park"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -5.9905,
+       37.379
+      ],
+      [
+       -5.985,
+       37.38
+      ],
+      [
+       -5.984,
+       37.374
+      ],
+      [
+       -5.9895,
+       37.373
+      ],
+      [
+       -5.9905,
+       37.379
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

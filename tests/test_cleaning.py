@@ -21,15 +21,17 @@ V1,2026-03-10 08:00:35,37.3893,-5.9850
 def test_invalid_records_are_removed_with_reason():
     clean, removed = clean_records(load_records(StringIO(CSV)))
     assert len(clean) == 3
-    assert sorted(removed["reason"]) == sorted([
-        "zero coordinates (0, 0)",
-        "outside valid latitude/longitude range",
-        "missing or unreadable value",
-        "missing or unreadable value",
-        "missing or unreadable value",
-        "outside Seville area",
-        "duplicate timestamp",
-    ])
+    assert sorted(removed["reason"]) == sorted(
+        [
+            "zero coordinates (0, 0)",
+            "outside valid latitude/longitude range",
+            "missing or unreadable coordinate",
+            "missing or unreadable coordinate",
+            "missing or unreadable timestamp",
+            "outside study area",
+            "duplicate timestamp",
+        ]
+    )
 
 
 def test_clean_output_is_sorted_and_typed():
