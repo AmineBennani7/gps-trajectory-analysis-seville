@@ -7,7 +7,13 @@ import pytest
 from gps_seville import analytics, spatial
 from gps_seville.analysis import position_at
 from gps_seville.exceptions import InsufficientDataError
-from gps_seville.mapping import MapLayers, build_analysis_map, zoom_for_extent
+from gps_seville.mapping import (
+    LIGHT_GREY,
+    MapLayers,
+    available_basemaps,
+    build_analysis_map,
+    zoom_for_extent,
+)
 from gps_seville.views import Filters, apply_filters, raw_track
 from tests.conftest import ZONES
 
@@ -88,7 +94,7 @@ def test_map_with_all_layers(fleet_result, zones):
         "Geofence zones",
         "Route buffers (100 m)",
         "Heatmap of fixes",
-        "Raw fixes before cleaning",
+        "Raw fixes before cleaning (dashed)",
         "Detected stops",
         "Frequent locations (DBSCAN)",
         "Unusual movement",
@@ -117,3 +123,26 @@ def test_position_at_observed_and_interpolated(fleet_result):
     assert min(p0.y, p1.y) <= lat_m <= max(p0.y, p1.y)
     with pytest.raises(InsufficientDataError):
         position_at(traj, t0 - pd.Timedelta(days=1))
+
+
+def test_basemaps_without_carto_key(monkeypatch, fleet_result, zones):
+    monkeypatch.delenv("CARTO_API_KEY", raising=False)
+    assert available_basemaps() == [LIGHT_GREY, "OpenStreetMap"]
+    v = apply_filters(fleet_result, Filters(), zones)
+    html = build_analysis_map(v, MapLayers(), zones).get_root().render()
+    assert "basemap-grey" in html and "grayscale(1)" in html
+    assert "leaflet.polylineoffset" in html and '"offset": 9.0' in html  # 4 routes side by side
+    assert "tile.openstreetmap.org" in html and "openstreetmap.org/copyright" in html
+    assert "cartocdn" not in html
+    # a CARTO basemap requested without a key falls back to the default
+    html = build_analysis_map(v, MapLayers(), zones, basemap="CARTO Voyager").get_root().render()
+    assert "cartocdn" not in html
+
+
+def test_basemaps_with_carto_key(monkeypatch, fleet_result, zones):
+    monkeypatch.setenv("CARTO_API_KEY", "test-key")
+    assert "CARTO Voyager" in available_basemaps()
+    v = apply_filters(fleet_result, Filters(), zones)
+    html = build_analysis_map(v, MapLayers(), zones, basemap="CARTO Voyager").get_root().render()
+    assert "rastertiles/voyager" in html and "api_key=test-key" in html
+    assert "carto.com/attributions" in html

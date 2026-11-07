@@ -27,7 +27,7 @@ from gps_seville.env import load_env_file
 from gps_seville.exceptions import GpsAnalysisError
 from gps_seville.export import to_csv, to_geojson
 from gps_seville.logging_config import configure_logging, get_logger
-from gps_seville.mapping import MapLayers, build_analysis_map
+from gps_seville.mapping import MapLayers, available_basemaps, build_analysis_map
 from gps_seville.pipeline import PipelineResult, run_pipeline
 from gps_seville.readers import read_files
 from gps_seville.views import Filters, apply_filters, raw_track
@@ -223,6 +223,9 @@ with filter_box:
     zone = st.selectbox("Zone", ["All areas", *zones["name"]])
 
 with layer_box, st.expander("Map layers", expanded=True):
+    basemap = st.selectbox("Basemap", available_basemaps())
+    if len(available_basemaps()) == 2:
+        st.caption("CARTO Positron and Voyager need a free CARTO API key (CARTO_API_KEY).")
     layers = MapLayers(
         trajectories=st.checkbox("Trajectories", True),
         start_end=st.checkbox("Start and end markers", True),
@@ -323,7 +326,16 @@ with map_tab:
         else None
     )
     fmap = build_analysis_map(
-        view, layers, zones, result.rejected, raw_fixes, buffers, locations, anomalies, estimate
+        view,
+        layers,
+        zones,
+        result.rejected,
+        raw_fixes,
+        buffers,
+        locations,
+        anomalies,
+        estimate,
+        basemap=basemap,
     )
     st_folium(fmap, height=620, use_container_width=True, returned_objects=[], key="main_map")
     st.caption(
@@ -466,7 +478,8 @@ with spatial_tab:
             "nearest-edge snapping, not full map matching."
         )
         if st.button("Load road network"):
-            area = view.lines.to_crs(crs).union_all().buffer(150)
+            # bounding box of the routes + 150 m: one simple Overpass query
+            area = view.lines.to_crs(crs).union_all().buffer(150).envelope
             area_wgs = gpd.GeoSeries([area], crs=crs).to_crs(4326).iloc[0]
             try:
                 with st.spinner("Downloading roads from OpenStreetMap..."):
