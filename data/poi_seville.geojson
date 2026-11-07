@@ -1,0 +1,112 @@
+{
+ "type": "FeatureCollection",
+ "name": "poi_seville",
+ "description": "Approximate locations of a few landmarks, for proximity analysis.",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "poi_id": 1,
+    "name": "Catedral de Sevilla",
+    "category": "monument"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.9931,
+     37.3858
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "poi_id": 2,
+    "name": "Torre del Oro",
+    "category": "monument"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.9964,
+     37.3824
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "poi_id": 3,
+    "name": "Plaza de España",
+    "category": "monument"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.9869,
+     37.3772
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "poi_id": 4,
+    "name": "Estadio Ramón Sánchez-Pizjuán",
+    "category": "stadium"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.9706,
+     37.384
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "poi_id": 5,
+    "name": "Estación de Santa Justa",
+    "category": "station"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.9752,
+     37.392
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "poi_id": 6,
+    "name": "Mercado de Triana",
+    "category": "market"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -6.0029,
+     37.3857
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "poi_id": 7,
+    "name": "Basílica de la Macarena",
+    "category": "monument"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -5.9894,
+     37.4012
+    ]
+   }
+  }
+ ]
+}
